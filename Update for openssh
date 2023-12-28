@@ -1,0 +1,14 @@
+---
+- name: Apply patches
+  hosts: centos
+  become: true
+
+  tasks:
+    - name: Update package cache
+      package_facts:
+        manager: auto
+
+    - name: update openssh
+      package:
+        name: openssh
+        state: latest
