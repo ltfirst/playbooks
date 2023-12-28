@@ -1,13 +1,9 @@
 ---
-- name: Apply patches
-  hosts: centos
+- name: Update_for_openssh
+  hosts: all
   become: true
 
   tasks:
-    - name: Update package cache
-      package_facts:
-        manager: auto
-
     - name: update openssh
       package:
         name: openssh
