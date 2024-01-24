@@ -1,0 +1,16 @@
+---
+- name: Transfer SSH Key
+  hosts: your_target_hosts
+  become: yes
+  tasks:
+    - name: Ensure SSH directory exists
+      become_user: "{{ ansible_user }}"
+      file:
+        path: "~/.ssh"
+        state: directory
+
+    - name: Copy SSH key to remote host
+      become_user: "{{ ansible_user }}"
+      copy:
+        src: /home/ansibletest/.ssh/id_rsa
+        dest: "~/.ssh/authorized_keys"
