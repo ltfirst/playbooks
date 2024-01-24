@@ -1,6 +1,6 @@
 ---
 - name: Transfer SSH Key
-  hosts: hosts
+  hosts: all
   become: yes
   tasks:
     - name: Ensure SSH directory exists
