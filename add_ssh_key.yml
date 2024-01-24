@@ -6,11 +6,14 @@
     - name: Ensure SSH directory exists
       become_user: "{{ ansible_user }}"
       file:
-        path: "~/.ssh"
+        path: "/home/{{ ansible_user }}/.ssh"
         state: directory
-
+      register: ssh_dir_result
+      
     - name: Copy SSH key to remote host
       become_user: "{{ ansible_user }}"
       copy:
         src: /home/ansibletest/.ssh/id_rsa
         dest: "~/.ssh/authorized_keys"
+      register: copy_result
+
