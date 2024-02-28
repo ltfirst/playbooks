@@ -1,0 +1,5 @@
+- name: Debug ansible_user variable
+  hosts: all
+  tasks:
+    - debug:
+        var: ansible_user
