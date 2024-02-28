@@ -8,7 +8,7 @@
       lineinfile:
         path: ~/.ssh/authorized_keys
         line: "#ansible"
-        create: no
+        create: yes
 
     - name: Add ansible SSH Key
       lineinfile:
