@@ -2,7 +2,7 @@
   hosts: all
   #become: true
   vars:
-    ansible_user: root
+    ansible_user: "{{ ansible_user }}"
   tasks:
     - name: Add ansible SSH Key
       lineinfile:
