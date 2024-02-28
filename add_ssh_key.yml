@@ -5,12 +5,12 @@
   tasks:
     - name: Add ansible SSH Key
       lineinfile:
-        path: /home/{{ ansible_user }}/.ssh/authorized_keys
+        path: /{{ ansible_user }}/.ssh/authorized_keys
         line: "#ansible"
         create: yes
 
     - name: Add ansible SSH Key
       lineinfile:
-        path: /home/{{ ansible_user }}/.ssh/authorized_keys
+        path: /{{ ansible_user }}/.ssh/authorized_keys
         line: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDV3IcY0q8X23AbcfncCwrr4Q31vikCQnc4+96IwDWOhrMcDWsQHkX1V/Y0JCfgyN2XwqG/iEC4v8plL3eH3awax/c87o9WuQCPlpJ5ZrSDHnGa/MvCMZNZKKkjztCDOAagr430SLo6bLYdn14TuCxwB0ByxKotCtEQoXfeCrhAncjij3MSpzgsTCZtkhESpJYhUNdjv1B//8jTzqwL4WQwiPm6cVvLFsTWK1+UB9/S9UZScH+cIOMZDd1e53Qn0biTEzJg6n90vwo158cEtp5WJ9enbqplJ75FdcSMShCbCUXdTmz4L0bRqp8k5JFPSMCUiSbueiA0kE+SYSKArC3T ansibleadmin@ansible"
         create: no
