@@ -1,0 +1,23 @@
+---
+- name: Transfer and run Python script
+  hosts: your_linux_host
+  gather_facts: no
+  vars:
+    win_share_path: '\\10.21.100.89\运维it组\IT\Longteng\系统\脚本\自动检测补丁并更新'  # Windows 共享路径
+    python_script_name: 'main.py'  # Python 脚本文件名
+    local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
+  tasks:
+    - name: Transfer Python script from Windows share
+      win_copy:
+        src: "{{ win_share_path }}/{{ python_script_name }}"
+        dest: "{{ local_python_script }}"
+      register: copy_result
+
+    - name: Run Python script
+      command: "python {{ local_python_script }}"
+      register: python_output
+      when: copy_result.changed
+
+    - name: Show Python script output
+      debug:
+        msg: "{{ python_output.stdout }}"
