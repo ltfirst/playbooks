@@ -1,12 +1,12 @@
----
 - name: Check Cs
   hosts: all
+
   tasks:
     - name: Execute ps command
       shell: ps -e | grep falcon-sensor
-      register: ps_result
-      ignore_errors: true
+      register: ps_output
+      ignore_errors: yes
 
     - name: Display ps command output
       debug:
-        var: ps_result.stdout_lines
+        msg: "{{ ps_output.stdout | default('none', true) }}"
