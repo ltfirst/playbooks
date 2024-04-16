@@ -4,7 +4,7 @@
   gather_facts: no
   vars:
     win_share_path: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/"  # Windows 共享路径
-    python_script_name: 'main.py'  # Python 脚本文件名
+    python_script_name: 'update_software.py'  # Python 脚本文件名
     excel_file_name: '1.xlsx'      # Excel 文件名
     local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
     local_excel_file: "/tmp/{{ excel_file_name }}"      # 本地保存的 Excel 文件路径
