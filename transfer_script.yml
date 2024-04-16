@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   vars:
-    win_share_path: "\\10.21.100.89\运维it组\IT\Longteng\系统\脚本\自动检测补丁并更新"  # Windows 共享路径
+    win_share_path: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/"  # Windows 共享路径
     python_script_name: 'main.py'  # Python 脚本文件名
     local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
   tasks:
