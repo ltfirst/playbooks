@@ -24,7 +24,6 @@
     - name: Run Python script
       command: "python {{ local_python_script }}"
       register: python_output
-      when: python_script_result.changed
 
     - name: Show Python script output
       debug:
