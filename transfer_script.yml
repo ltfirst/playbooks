@@ -22,7 +22,7 @@
       register: excel_file_result
 
     - name: Run Python script
-      command: "python {{ local_python_script }}"
+      command: "python3 {{ local_python_script }}"
       register: python_output
 
     - name: Show Python script output
