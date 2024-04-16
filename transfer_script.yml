@@ -8,8 +8,8 @@
     local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
   tasks:
     - name: Transfer Python script from Windows share
-      win_copy:
-        src: "{{ win_share_path }}/{{ python_script_name }}"
+      get_url:
+        url: "{{ win_share_path }}/{{ python_script_name }}"
         dest: "{{ local_python_script }}"
       register: copy_result
 
