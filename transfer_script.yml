@@ -29,3 +29,4 @@
     - name: Show Python script output
       debug:
         msg: "{{ python_output.stdout }}"
+      when: python_output is defined and python_output.stdout is defined
