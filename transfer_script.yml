@@ -5,18 +5,26 @@
   vars:
     win_share_path: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/"  # Windows 共享路径
     python_script_name: 'main.py'  # Python 脚本文件名
+    excel_file_name: '1.xlsx'      # Excel 文件名
     local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
+    local_excel_file: "/tmp/{{ excel_file_name }}"      # 本地保存的 Excel 文件路径
   tasks:
     - name: Transfer Python script from Windows share
       get_url:
         url: "{{ win_share_path }}/{{ python_script_name }}"
         dest: "{{ local_python_script }}"
-      register: copy_result
+      register: python_script_result
+
+    - name: Transfer Excel file from Windows share
+      get_url:
+        url: "{{ win_share_path }}/{{ excel_file_name }}"
+        dest: "{{ local_excel_file }}"
+      register: excel_file_result
 
     - name: Run Python script
       command: "python {{ local_python_script }}"
       register: python_output
-      when: copy_result.changed
+      when: python_script_result.changed
 
     - name: Show Python script output
       debug:
