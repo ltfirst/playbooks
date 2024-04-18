@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   vars:
-    python_script_path: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/"  # Windows 共享路径
+    python_script_path: "http://192.168.47.78/Software/Scripts/Linux_Scripts/Ansible_Scripts/"  # Windows 共享路径
     python_script_name: 'update_software.py'  # Python 脚本文件名
     excel_file_name: '1.xlsx'      # Excel 文件名
     local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
@@ -15,11 +15,10 @@
         dest: "{{ local_python_script }}"  #python放在哪个路径下
       register: python_script_result   #下载结果存放在python_script_result变量中
 
-    - name: Download Excel file #下载excel
-      get_url: #get url模块
-        url: "{{ python_script_path }}/{{ excel_file_name }}"
-        dest: "{{ local_excel_file }}"
-      register: excel_file_result
+    - name: Install pymysql module
+      pip:
+        name: pymysql
+
 
     - name: Run Python script
       command: "python3 {{ local_python_script }}"
