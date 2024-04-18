@@ -1,29 +1,39 @@
 ---
 - name: Transfer and run Python script
   hosts: all
-  gather_facts: no
-  vars:
-    python_script_path: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/"  # Windows 共享路径
-    python_script_name: 'update_software.py'  # Python 脚本文件名
-    local_python_script: "/tmp/{{ python_script_name }}"  # 本地保存的 Python 脚本路径
+  gather_facts: yes
 
   tasks:
-    - name: Download Python Script #下载python脚本
-      get_url:  #get url模块
-        url: "{{ python_script_path }}/{{ python_script_name }}"  #python所在路径
-        dest: "{{ local_python_script }}"  #python放在哪个路径下
-      register: python_script_result   #下载结果存放在python_script_result变量中
+    - name: Install required packages for CentOS and Red Hat
+      yum:
+        name: "{{ item }}"
+        state: present
+      when: ansible_facts['distribution'] == 'CentOS' or ansible_facts['distribution'] == 'RedHat'
+      loop:
+        - python3-setuptools
+        - python3-pymysql
+      become: yes
 
-    - name: Install pymysql module
-      pip:
-        name: pymysql
-       
-        
+    - name: Install required packages for Ubuntu and Debian
+      apt:
+        name: "{{ item }}"
+        state: present
+      when: ansible_facts['distribution'] == 'Ubuntu' or ansible_facts['distribution'] == 'Debian'
+      loop:
+        - python3-setuptools
+        - python3-pymysql
+      become: yes
+
+    - name: Download Python Script
+      get_url:
+        url: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
+        dest: "/tmp/update_software.py"
+
     - name: Run Python script
-      command: "python3 {{ local_python_script }}"
+      command: "python3 /tmp/update_software.py"
       register: python_output
+      become: yes
 
     - name: Show Python script output
       debug:
         msg: "{{ python_output.stdout }}"
-      
