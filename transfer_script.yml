@@ -11,7 +11,6 @@
     - name: Check if python3-setuptools is installed
       command: "python3 -c 'import setuptools'"
       register: setuptools_check
-      changed_when: false
       ignore_errors: true
 
     - name: Install python3-setuptools if not present
@@ -19,22 +18,21 @@
         name: "{{ 'python3-setuptools' if os_type in ['CentOS', 'RedHat'] else 'python3-setuptools' }}"
         state: present
       become: yes
-      when: setuptools_check|failed
+      when: setuptools_check.rc != 0
 
     - name: Check if pymysql is installed
       command: "python3 -c 'import pymysql'"
       register: pymysql_check
-      changed_when: false
       ignore_errors: true
 
-    - name: install pymysql if not present
+    - name: Install pymysql if not present
       command: pip3 install pymysql
       become: yes
-      when: pymysql_check|failed
+      when: pymysql_check.rc != 0
 
     - name: Download Python script
       get_url:
-        url: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
+        url: "http://192.168.47.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
         dest: "/tmp/update_software.py"
 
     - name: Run Python script
@@ -45,6 +43,3 @@
     - name: Show Python script output
       debug:
         msg: "{{ python_output.stdout }}"
-
-        
-      
