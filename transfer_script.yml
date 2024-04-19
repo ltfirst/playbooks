@@ -10,9 +10,10 @@
       register: check_python3  #将结果存储到check_python3变量中
       changed_when: false  #将任务标记为未更改
       ignore_errors: true  #如果上面的命令运行后报错(代表python3或setuptools未安装)，忽略报错
+      failed_when: false   #将任务标记为不失败
 
     - name: intall python3-setuptools for centos or redhat
-      when: (ansible_facts['distribution'] == 'CentOS' or ansible_facts['distribution'] == 'RedHat') and check_python3|failed #判断系统是不是CentOS或redhat,以及check_python3变量值是不是failed
+      when: (ansible_facts['distribution'] == 'CentOS' or ansible_facts['distribution'] == 'RedHat') and (check_python3|failed) #判断系统是不是CentOS或redhat,以及check_python3变量值是不是failed
       yum: 
         name: python3-setuptools
         state: present   #安装
