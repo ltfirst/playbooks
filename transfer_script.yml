@@ -18,6 +18,11 @@
         name: python3-setuptools
         state: present   #安装
       become: yes
+
+    - name: install pymysql using pip3
+      when: (ansible_facts['distribution'] == 'CentOS' or ansible_facts['distribution'] == 'RedHat') 
+      command: "sudo pip3 install pymysql"
+      become: yes
         
         
       
