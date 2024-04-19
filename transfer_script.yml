@@ -30,10 +30,9 @@
       become: yes
       when: pymysql_check.rc != 0
 
-    - name: Download Python script
-      get_url:
-        url: "http://10.21.100.97/Software/Windows_Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
-        dest: "/tmp/update_software.py"
+    - name: download python script
+      command: wget http://10.21.100.97/Software/Windows_Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py -O /tmp/update_software.py
+      become: yes
 
     - name: Run Python script
       command: "python3 /tmp/update_software.py"
