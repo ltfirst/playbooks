@@ -17,7 +17,6 @@
       yum: 
         name: python3-setuptools
         state: present   #安装
-        register: install_python3 #将结果存储到install_python3变量中
       become: yes
         
         
