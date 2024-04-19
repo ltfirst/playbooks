@@ -67,7 +67,7 @@
       when: os_type == 'Ubuntu' and pymysql_check.rc != 0 and pip3_check.rc == 0
 
     - name: Download Python script
-      command: wget http://192.168.47.97/Software/Windows_Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py -O /tmp/update_software.py
+      command: wget http://10.21.100.97/Software/Windows_Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py -O /tmp/update_software.py
       become: yes
 
     - name: Run Python script
