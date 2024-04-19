@@ -1,39 +1,23 @@
 ---
-- name: Transfer and run Python script
+- name: download and run python script
   hosts: all
-  gather_facts: yes
+  gather_facts: yes #用于获取系统数据，例如IP地址、内存使用率、系统版本等
 
   tasks:
-    - name: Install required packages for CentOS and Red Hat
-      yum:
-        name: "{{ item }}"
-        state: present
+    - name: check python3-setuptools is installed by centos or redhat
       when: ansible_facts['distribution'] == 'CentOS' or ansible_facts['distribution'] == 'RedHat'
-      loop:
-        - python3-setuptools
-        - python3-pymysql
+      command: "python3 -c 'import setuptools'" #通过命令来判断python3以及setuptools是否安装
+      register: check_python3  #将结果存储到check_python3变量中
+      changed_when: false  #将任务标记为未更改
+      ignore_errors: true  #如果上面的命令运行后报错(代表python3或setuptools未安装)，忽略报错
+
+    - name: intall python3-setuptools for centos or redhat
+      when: (ansible_facts['distribution'] == 'CentOS' or ansible_facts['distribution'] == 'RedHat') and check_python3|failed #判断系统是不是CentOS或redhat,以及check_python3变量值是不是failed
+      yum: 
+        name: python3-setuptools
+        state: present   #安装
+        register: install_python3 #将结果存储到install_python3变量中
       become: yes
-
-    - name: Install required packages for Ubuntu and Debian
-      apt:
-        name: "{{ item }}"
-        state: present
-      when: ansible_facts['distribution'] == 'Ubuntu' or ansible_facts['distribution'] == 'Debian'
-      loop:
-        - python3-setuptools
-        - python3-pymysql
-      become: yes
-
-    - name: Download Python Script
-      get_url:
-        url: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
-        dest: "/tmp/update_software.py"
-
-    - name: Run Python script
-      command: "python3 /tmp/update_software.py"
-      register: python_output
-      become: yes
-
-    - name: Show Python script output
-      debug:
-        msg: "{{ python_output.stdout }}"
+        
+        
+      
