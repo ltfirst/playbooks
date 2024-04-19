@@ -27,12 +27,11 @@
       changed_when: false
       ignore_errors: true
 
-    - name: Install pymysql if not present
-      pip3:
-        name: pymysql
-        state: present
+   - name: Install pymysql if not present
+      command: pip3 install pymysql
       become: yes
       when: pymysql_check|failed
+
 
     - name: Download Python script
       get_url:
