@@ -32,7 +32,7 @@
 
     - name: Download Python script
       get_url:
-        url: "http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
+        url: "http://10.21.100.97/Software/Windows_Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py"
         dest: "/tmp/update_software.py"
 
     - name: Run Python script
