@@ -1,0 +1,8 @@
+---
+- name: download and python script
+  hosts: all
+
+taskas: 
+  -name: download python script
+    command: wget http://192.168.47.97/Software/Windows_Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py -O /tmp/update_software.py
+    become: yes
