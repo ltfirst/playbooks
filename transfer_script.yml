@@ -8,18 +8,6 @@
       set_fact:
         os_type: "{{ ansible_facts['distribution'] }}"
 
-    - name: Check if wget is installed
-      command: which wget
-      register: wget_check
-      ignore_errors: true
-
-    - name: Install wget if not present
-      package:
-        name: wget
-        state: present
-      become: yes
-      when: wget_check.rc != 0
-
     - name: Check if python3-setuptools is installed
       command: "python3 -c 'import setuptools'"
       register: setuptools_check
@@ -66,15 +54,4 @@
       become: yes
       when: os_type == 'Ubuntu' and pymysql_check.rc != 0 and pip3_check.rc == 0
 
-    - name: Download Python script
-      command: wget http://10.21.100.97/Software/Scripts/Linux_Scripts/Ansible_Scripts/update_software.py -O /tmp/update_software.py
-      become: yes
 
-    - name: Run Python script
-      command: python3 /tmp/update_software.py
-      register: python_output
-      become: yes
-
-    - name: Show Python script output
-      debug:
-        msg: "{{ python_output.stdout }}"
